@@ -30,4 +30,20 @@
 #include "libudis86/extern.h"
 #include "libudis86/itab.h"
 
+#ifdef _WIN64
+
+#ifdef _DEBUG
+#pragma comment(lib, "libudis86_x64_debug.lib")
+#else
+#pragma comment(lib, "libudis86_x64_release.lib")
+#endif
+
+#else
+
+#ifdef _DEBUG
+#pragma comment(lib, "libudis86_x86_debug.lib")
+#else
+#pragma comment(lib, "libudis86_x86_release.lib")
+#endif
+
 #endif
