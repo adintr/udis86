@@ -157,6 +157,7 @@ struct ud_operand {
   uint8_t         scale;  
   uint8_t         offset;
   union ud_lval   lval;
+  size_t          lvaloffset;
   /*
    * internal use only
    */

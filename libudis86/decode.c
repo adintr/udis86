@@ -383,12 +383,14 @@ decode_a(struct ud* u, struct ud_operand *op)
     /* seg16:off16 */
     op->type = UD_OP_PTR;
     op->size = 32;
+	op->lvaloffset = u->inp_ctr;
     op->lval.ptr.off = inp_uint16(u);
     op->lval.ptr.seg = inp_uint16(u);
   } else {
     /* seg16:off32 */
     op->type = UD_OP_PTR;
     op->size = 48;
+	op->lvaloffset = u->inp_ctr;
     op->lval.ptr.off = inp_uint32(u);
     op->lval.ptr.seg = inp_uint16(u);
   }
@@ -473,6 +475,7 @@ decode_imm(struct ud* u, unsigned int size, struct ud_operand *op)
 {
   op->size = resolve_operand_size(u, size);
   op->type = UD_OP_IMM;
+  op->lvaloffset = u->inp_ctr;
 
   switch (op->size) {
   case  8: op->lval.sbyte = inp_uint8(u);   break;
@@ -492,6 +495,8 @@ decode_imm(struct ud* u, unsigned int size, struct ud_operand *op)
 static void 
 decode_mem_disp(struct ud* u, unsigned int size, struct ud_operand *op)
 {
+  op->lvaloffset = u->inp_ctr;
+
   switch (size) {
   case 8:
     op->offset = 8; 
@@ -731,6 +736,7 @@ decode_operand(struct ud           *u,
                unsigned int         size)
 {
   operand->type = UD_NONE;
+  operand->lvaloffset = 0;
   operand->_oprcode = type;
 
   switch (type) {
