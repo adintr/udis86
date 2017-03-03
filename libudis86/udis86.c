@@ -27,6 +27,7 @@
 #include "udint.h"
 #include "extern.h"
 #include "decode.h"
+#include "syn.h"
 
 #if !defined(__UD_STANDALONE__)
 # if HAVE_STRING_H
@@ -340,6 +341,14 @@ ud_lookup_mnemonic(enum ud_mnemonic_code c)
   }
 }
 
+const char* 
+ud_lookup_regname(enum ud_type rc)
+{
+	if (rc <= UD_NONE || rc > UD_OP_REG)
+		return NULL;
+
+	return ud_reg_tab[rc - UD_R_AL];
+}
 
 /* 
  * ud_inp_init
